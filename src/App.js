@@ -16,7 +16,7 @@ function App() {
       </nav>
         <UserBar user={user} setUser={setUser}/>
         {user && <CreateToDo todos={todos} setTodos={setTodos}/>}
-        {user && <ToDoList todos={todos}/>}
+        {user && <ToDoList todos={todos} setTodos={setTodos}/>}
     </div>
   );
 }

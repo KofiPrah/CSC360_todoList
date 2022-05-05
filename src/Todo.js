@@ -1,19 +1,19 @@
 import React, {useState} from "react";
 
-export default function Todo({ title, content, dateCreated, complete }) {
-
+export default function Todo({ title, content, dateCreated,dateCompleted, complete,updateTodo, index }) {
+    
+    function handleCheckbox (event) {const newTodo={title, content, dateCreated,dateCompleted: Date(Date.now()).toString(), complete: event.target.checked}
+    updateTodo(index,newTodo)
+}
+        
     return (
         <div>
             <h3>{title}</h3>
-            <i>{dateCreated}</i>
+            <i>Date Created: {dateCreated}</i>
             <div>{content}</div>
-            <form onSubmit={(e)=>{e.preventDefault();}}>
-                <div>
-                    <input type="checkbox" value={complete} name="is-complete" id="is-complete" /> 
-                    <label htmlFor="is-complete">Complete</label>
-                </div>
-            </form>
-            <br/>
+            Completed: {complete} <input type="checkbox" value={complete} onChange={handleCheckbox}/>
+            <div>Date Completed: {dateCompleted}</div>
+            
         </div>
     );
  }
