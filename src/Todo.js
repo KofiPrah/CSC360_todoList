@@ -1,10 +1,10 @@
 import React, {useState} from "react";
 
-export default function Todo({ title, content, dateCreated,dateCompleted, complete,updateTodo, index }) {
+export default function Todo({ title, content, dateCreated, dateCompleted, complete,dispatch, index}) {
     
-    function handleCheckbox (event) {const newTodo={title, content, dateCreated,dateCompleted: Date(Date.now()).toString(), complete: event.target.checked}
-    updateTodo(index,newTodo)
-}
+    function handleCheckbox (event) {
+        dispatch({type:"TOGGLE_TODO",title, content, dateCreated,dateCompleted: Date(Date.now()).toString(), complete: event.target.checked, index})
+}   
         
     return (
         <div>
@@ -13,7 +13,6 @@ export default function Todo({ title, content, dateCreated,dateCompleted, comple
             <div>{content}</div>
             Completed: {complete} <input type="checkbox" value={complete} onChange={handleCheckbox}/>
             <div>Date Completed: {dateCompleted}</div>
-            
         </div>
     );
  }
