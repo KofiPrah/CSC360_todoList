@@ -11,7 +11,7 @@ export default function CreateToDo({todos,dispatch}){
     function handleContent (evt) { setContent(evt.target.value) }
 
     function handleCreate (evt) {
-        dispatch({ type: 'CREATE_TODO', title, content, dateCreated:Date(Date.now()).toString() , dateCompleted: null, complete: false})
+        dispatch({ type:'CREATE_TODO', title, content, dateCreated:Date(Date.now()).toString() , dateCompleted: null, complete: false, id:Math.floor(Math.random()* 100000)})
     }
     
     

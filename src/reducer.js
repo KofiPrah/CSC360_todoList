@@ -19,23 +19,17 @@ function userReducer(state, action) {
         dateCreated: action.dateCreated, 
         dateCompleted: action.dateCompleted, 
         complete:action.complete,
-        index:action.index         
+        id:action.id        
       };
       return [newTodo, ...state];
+
       case "TOGGLE_TODO":
-        state[action.index]= {
-          title: action.title,
-          content: action.content,
-          dateCreated: action.dateCreated, 
-          dateCompleted: action.dateCompleted, 
-          complete:action.complete,
-          index:action.index
-        };
-        return state;
-       //case "DELETE_TODO":
-         //return state.filter(todo=>todo.id != action.id)
+        return action.updatedTodos
+
+      case "DELETE_TODO":
+        return action.updatedTodos
       default:
-      return state;
+        return state; 
       }
     }
 
