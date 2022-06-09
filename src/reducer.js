@@ -10,8 +10,8 @@ function userReducer(state, action) {
       }
     }
     
-    function todoReducer(state, action) {
-      switch (action.type) {
+function todoReducer(state, action) {
+    switch (action.type) {
       case "CREATE_TODO":
       const newTodo = {
         title: action.title,
@@ -28,6 +28,10 @@ function userReducer(state, action) {
 
       case "DELETE_TODO":
         return action.updatedTodos
+      
+      case 'FETCH_TODOS':
+        return action.todos
+      
       default:
         return state; 
       }

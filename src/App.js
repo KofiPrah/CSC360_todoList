@@ -1,28 +1,51 @@
-import React, { useState, useReducer } from "react";
+import React, {useState, useEffect, createContext, useReducer} from "react";
+import {useResource} from 'react-request-hook'
+
 import UserBar from "./UserBar";
 import ToDoList from "./ToDoList";
 import CreateToDo from "./CreateToDo";
-import appReducer from "./reducer";
+import StateContext from "./contexts";
 
-    
+import appReducer from "./reducer";
+import HeaderBar from "./pages/HeaderBar";
+import HomePage from "./pages/HomePage";
+import TodoPage from "./pages/TodoPage";
+
+import { Router, View } from 'react-navi'
+import { mount, route } from 'navi'
+
 function App() {
-  const [ state, dispatch ] = useReducer(appReducer, { user: '', todos: []})
-  //const [user, dispatchUser] = useReducer(userReducer, "");  
-  //const [todos,dispatchTodo] = useReducer(todoReducer,defaultTodo);
-  const{user,todos}=state
+  
+  const[state,dispatch]= useReducer(appReducer,{user:"",todos:[]});
+
+  const routes = mount({
+    '/': route({ view: <HomePage /> }),
+    '/todos/create':route({ view: <CreateToDo /> }),
+    '/todos/:id': route(req => {
+        return { view: <TodoPage id={req.params.id} /> }
+    }),
+})
+
+useEffect(()=>{
+  console.log('user effect hook firing')
+  if (state.user){
+    document.title= `${state.user}'s Blog`
+  }else{
+    document.title='My Blog'
+  }
+},[state.user])
+
+
 
   return(
-    <div>  
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"></link>
-      <nav class ="navbar navbar-light bg-light">
-        <div class="container-fluid"><span class="navbar-brand mb-0 h1">Homework 3</span></div>
-      </nav>
-      
-      <UserBar user={state.user} dispatch={dispatch} />;
-      {state.user && <CreateToDo todos={state.todos} dispatch={dispatch}/>}
-      {state.user && <ToDoList todos={state.todos} dispatch={dispatch} />}
-    </div>
+      <Router routes={routes}>
+        <StateContext.Provider value={{state,dispatch}}>
+          <HeaderBar/>
+          <View/>
+        </StateContext.Provider>
+      </Router>
   );
+
 }
 
 export default App;
